@@ -23,7 +23,7 @@ management:
         include: health,info
 stockpulse:
   advisor:
-    active: ${STOCKPULSE_ADVISOR_ACTIVE:rule-based}
+    active: ${STOCKPULSE_ADVISOR_ACTIVE:}
   demand-spike-multiplier: ${STOCKPULSE_DEMAND_SPIKE_MULTIPLIER:3.0}
   llm:
     provider: ${LLM_PROVIDER:openai-compatible}
