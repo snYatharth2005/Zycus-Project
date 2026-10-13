@@ -4,9 +4,14 @@ import java.util.NoSuchElementException;
 import org.springframework.http.*;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import jakarta.persistence.OptimisticLockException;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 
 @RestControllerAdvice
 public class ApiExceptionHandler {
+    @ExceptionHandler({OptimisticLockException.class, ObjectOptimisticLockingFailureException.class})
+    @ResponseStatus(HttpStatus.CONFLICT)
+    ProblemDetail conflict(Exception e) { return problem(HttpStatus.CONFLICT, "The resource changed concurrently; retry the operation"); }
     @ExceptionHandler(NoSuchElementException.class) @ResponseStatus(HttpStatus.NOT_FOUND)
     ProblemDetail notFound(NoSuchElementException e) { return problem(HttpStatus.NOT_FOUND, e.getMessage()); }
     @ExceptionHandler({IllegalArgumentException.class, MethodArgumentNotValidException.class}) @ResponseStatus(HttpStatus.BAD_REQUEST)
