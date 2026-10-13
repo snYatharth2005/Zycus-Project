@@ -17,8 +17,8 @@ public class SignalDetector {
     public List<TriggerReason> detect(Product product) {
         List<TriggerReason> signals = new ArrayList<>();
         if (product.getStockLevel() < product.getReorderThreshold()) signals.add(TriggerReason.INVENTORY_LOW);
-        BigDecimal average = products.findAll().stream().filter(p -> p.getCategory() == product.getCategory()).map(Product::getDemandVelocity).reduce(BigDecimal.ZERO, BigDecimal::add);
-        long count = products.findAll().stream().filter(p -> p.getCategory() == product.getCategory()).count();
+        BigDecimal average = products.findAll().stream().filter(p -> p.getCategory() == product.getCategory() && !p.getId().equals(product.getId())).map(Product::getDemandVelocity).reduce(BigDecimal.ZERO, BigDecimal::add);
+        long count = products.findAll().stream().filter(p -> p.getCategory() == product.getCategory() && !p.getId().equals(product.getId())).count();
         if (count > 0 && average.divide(BigDecimal.valueOf(count), 4, java.math.RoundingMode.HALF_UP).multiply(multiplier).compareTo(product.getDemandVelocity()) < 0) signals.add(TriggerReason.DEMAND_SPIKE);
         return signals;
     }
