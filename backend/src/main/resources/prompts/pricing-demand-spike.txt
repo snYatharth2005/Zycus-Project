@@ -1,0 +1,1 @@
+Return strictly JSON with recommendedPrice, direction, confidence, reasoning. Compare demand velocity with category average and stock cover; make a modest increase while avoiding stockout.

@@ -1,0 +1,1 @@
+Return strictly JSON with recommendedPrice, direction, confidence, reasoning. Make a safe, explainable pricing recommendation from the supplied inventory context.

@@ -1,0 +1,1 @@
+Return strictly JSON with recommendedQuantity, confidence, reasoning. Use velocity, category average, stock and threshold to prepare for demand.

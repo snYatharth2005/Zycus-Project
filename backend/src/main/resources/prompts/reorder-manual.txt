@@ -1,0 +1,1 @@
+Return strictly JSON with recommendedQuantity, confidence, reasoning. Recommend a positive, explainable reorder quantity.
