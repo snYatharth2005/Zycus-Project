@@ -1,0 +1,14 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: stockpulse
+      POSTGRES_USER: stockpulse
+      POSTGRES_PASSWORD: stockpulse
+    ports:
+      - "5432:5432"
+    volumes:
+      - stockpulse-postgres:/var/lib/postgresql/data
+
+volumes:
+  stockpulse-postgres:

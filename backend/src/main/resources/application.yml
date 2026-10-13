@@ -1,0 +1,72 @@
+spring:
+  application:
+    name: stockpulse
+  datasource:
+    url: jdbc:sqlite:./data/stockpulse.db
+    driver-class-name: org.sqlite.JDBC
+    hikari:
+      maximum-pool-size: 1
+      connection-init-sql: PRAGMA busy_timeout=5000
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+    open-in-view: false
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+stockpulse:
+  advisor:
+    active: ${STOCKPULSE_ADVISOR_ACTIVE:rule-based}
+  demand-spike-multiplier: ${STOCKPULSE_DEMAND_SPIKE_MULTIPLIER:3.0}
+  llm:
+    provider: ${LLM_PROVIDER:openai-compatible}
+    model: ${LLM_MODEL:qwen-cursor}
+    base-url: ${LLM_BASE_URL:https://litellm-qc.zycus.net}
+    api-key: ${LLM_API_KEY:}
+    connect-timeout: 3s
+    read-timeout: 20s
+    cookie-enabled: ${LLM_COOKIE_ENABLED:false}
+    cookie: ${LLM_COOKIE:}
+    product-header: ${LLM_PRODUCT_HEADER:}
+---
+spring:
+  config:
+    activate:
+      on-profile: postgres
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:stockpulse}
+    username: ${POSTGRES_USER:stockpulse}
+    password: ${POSTGRES_PASSWORD:stockpulse}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+  sql:
+    init:
+      mode: never
+
+---
+spring:
+  config:
+    activate:
+      on-profile: sqlite
+  datasource:
+    url: "jdbc:sqlite::memory:"
+    driver-class-name: org.sqlite.JDBC
+    hikari:
+      maximum-pool-size: 1
+      connection-init-sql: PRAGMA busy_timeout=5000
+  jpa:
+    hibernate:
+      ddl-auto: create
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+  sql:
+    init:
+      mode: always
