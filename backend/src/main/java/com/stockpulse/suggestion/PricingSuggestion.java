@@ -39,6 +39,24 @@ public class PricingSuggestion {
         this.createdAt = java.time.Instant.now().toString();
     }
 
+    public PricingSuggestion(Product product, BigDecimal currentPrice, BigDecimal recommendedPrice, PricingDirection direction,
+                              BigDecimal confidence, String reasoning, TriggerReason triggerReason, SuggestionSource source) {
+        this(product, null); this.currentPrice = currentPrice; this.recommendedPrice = recommendedPrice; this.direction = direction;
+        this.confidence = confidence; this.reasoning = reasoning; this.triggerReason = triggerReason; this.source = source;
+    }
+
     public String getId() { return id; }
     public String getDedupeKey() { return dedupeKey; }
+    public Product getProduct() { return product; }
+    public BigDecimal getCurrentPrice() { return currentPrice; }
+    public BigDecimal getRecommendedPrice() { return recommendedPrice; }
+    public PricingDirection getDirection() { return direction; }
+    public BigDecimal getConfidence() { return confidence; }
+    public String getReasoning() { return reasoning; }
+    public SuggestionStatus getStatus() { return status; }
+    public TriggerReason getTriggerReason() { return triggerReason; }
+    public SuggestionSource getSource() { return source; }
+    public String getFallbackReason() { return fallbackReason; }
+    public String getCreatedAt() { return createdAt; }
+    public void decide(SuggestionStatus status) { this.status = status; this.decidedAt = java.time.Instant.now().toString(); this.dedupeKey = null; }
 }
