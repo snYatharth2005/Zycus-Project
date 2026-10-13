@@ -26,9 +26,13 @@ public class ReorderSuggestion {
 
     public ReorderSuggestion(Product product, int currentStock, int quantity, int leadTime, BigDecimal confidence,
                               String reasoning, TriggerReason triggerReason, SuggestionSource source) {
+        this(product, currentStock, quantity, leadTime, confidence, reasoning, triggerReason, source, null);
+    }
+    public ReorderSuggestion(Product product, int currentStock, int quantity, int leadTime, BigDecimal confidence,
+                              String reasoning, TriggerReason triggerReason, SuggestionSource source, String fallbackReason) {
         this.product = product; this.currentStock = currentStock; this.recommendedQuantity = quantity;
         this.suggestedLeadTimeDays = leadTime; this.confidence = confidence; this.reasoning = reasoning;
-        this.status = SuggestionStatus.PENDING; this.triggerReason = triggerReason; this.source = source;
+        this.status = SuggestionStatus.PENDING; this.triggerReason = triggerReason; this.source = source; this.fallbackReason = fallbackReason;
         this.createdAt = java.time.Instant.now().toString();
     }
     public String getId() { return id; }
@@ -44,4 +48,5 @@ public class ReorderSuggestion {
     public String getFallbackReason() { return fallbackReason; }
     public String getCreatedAt() { return createdAt; }
     public void decide(SuggestionStatus status) { this.status = status; this.decidedAt = java.time.Instant.now().toString(); this.dedupeKey = null; }
+    public void setDedupeKey(String dedupeKey) { this.dedupeKey = dedupeKey; }
 }

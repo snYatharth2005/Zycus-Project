@@ -41,8 +41,12 @@ public class PricingSuggestion {
 
     public PricingSuggestion(Product product, BigDecimal currentPrice, BigDecimal recommendedPrice, PricingDirection direction,
                               BigDecimal confidence, String reasoning, TriggerReason triggerReason, SuggestionSource source) {
+        this(product, currentPrice, recommendedPrice, direction, confidence, reasoning, triggerReason, source, null);
+    }
+    public PricingSuggestion(Product product, BigDecimal currentPrice, BigDecimal recommendedPrice, PricingDirection direction,
+                              BigDecimal confidence, String reasoning, TriggerReason triggerReason, SuggestionSource source, String fallbackReason) {
         this(product, null); this.currentPrice = currentPrice; this.recommendedPrice = recommendedPrice; this.direction = direction;
-        this.confidence = confidence; this.reasoning = reasoning; this.triggerReason = triggerReason; this.source = source;
+        this.confidence = confidence; this.reasoning = reasoning; this.triggerReason = triggerReason; this.source = source; this.fallbackReason = fallbackReason;
     }
 
     public String getId() { return id; }
@@ -59,4 +63,5 @@ public class PricingSuggestion {
     public String getFallbackReason() { return fallbackReason; }
     public String getCreatedAt() { return createdAt; }
     public void decide(SuggestionStatus status) { this.status = status; this.decidedAt = java.time.Instant.now().toString(); this.dedupeKey = null; }
+    public void setDedupeKey(String dedupeKey) { this.dedupeKey = dedupeKey; }
 }
