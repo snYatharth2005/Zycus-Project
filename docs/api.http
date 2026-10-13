@@ -1,0 +1,23 @@
+@base = http://localhost:8080
+
+GET {{base}}/products
+
+POST {{base}}/products/PRD-003/orders
+Content-Type: application/json
+
+{"quantity":1}
+
+GET {{base}}/pricing-suggestions?productId=PRD-003&status=PENDING
+GET {{base}}/reorder-suggestions?productId=PRD-003&status=PENDING
+
+PATCH {{base}}/pricing-suggestions/{{pricingId}}
+Content-Type: application/json
+
+{"status":"ACCEPTED"}
+
+POST {{base}}/products/PRD-008/orders
+Content-Type: application/json
+
+{"quantity":7}
+
+GET {{base}}/admin/llm-health
